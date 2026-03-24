@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>INFORME_TECNICO_AUDITORIA_ENTIDAD_3</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #d63031;
+            --info: #3498db;
+            --terminal-bg: #1e1e1e;
+            --terminal-text: #ffffff;
+            --bg: #f9f9f9;
+            --warning: #ff4757;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #525659;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 10mm auto;
+            background: white;
+            padding: 15mm 20mm 25mm 20mm;
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+        }
+
+        .section-content p,
+        .matrix tr,
+        .console,
+        .danger-box,
+        h2,
+        h3,
+        li {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+                size: A4;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .page {
+                margin: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                overflow: hidden;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        .confidential-bar {
+            background: var(--accent) !important;
+            color: white !important;
+            text-align: center;
+            padding: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: -15mm -20mm 10mm -20mm;
+        }
+
+        .tlp-tag {
+            position: absolute;
+            top: 20mm;
+            right: 20mm;
+            background: #d63031 !important;
+            color: white !important;
+            padding: 8px 20px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        header {
+            border-bottom: 4px solid var(--info);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: 5mm;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--secondary);
+        }
+
+        .ip-badge {
+            background: var(--info) !important;
+            color: white !important;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 16px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        h2 {
+            color: var(--secondary);
+            border-left: 5px solid var(--info);
+            padding-left: 15px;
+            margin-top: 25px;
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+
+        .matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .matrix th {
+            background: var(--secondary) !important;
+            color: white !important;
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .matrix td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .critical {
+            background: #fab1a0 !important;
+            color: #c0392b !important;
+            font-weight: bold;
+        }
+
+        .high {
+            background: #ffeaa7 !important;
+            color: #d35400 !important;
+            font-weight: bold;
+        }
+
+        .medium {
+            background: #fdf5e6 !important;
+            color: #b8860b !important;
+            font-weight: bold;
+        }
+
+        .console {
+            background: #1e1e1e !important;
+            color: #ffffff !important;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border-left: 5px solid #636e72;
+            font-size: 11px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .danger-box {
+            background: #fff5f5 !important;
+            border-left: 4px solid var(--accent);
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+        .legal-box {
+            font-size: 11px;
+            color: #636e72;
+            text-align: justify;
+            background: #f9f9f9 !important;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10mm;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 11px;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+        <div class="tlp-tag">TLP:RED</div>
+
+        <header>
+            <h1>INFORME TÉCNICO DE AUDITORÍA ENS</h1>
+            <p><strong>Auditor:</strong> Consultor de Seguridad (IFCT0109)</p>
+            <p><strong>Entidad:</strong> Entidad Pública Local 3 </p>
+            <p><strong>Activo:</strong> <span class="ip-badge">10.0.0.104</span></p>
+            <p><strong>Metodología:</strong> Magerit v3 / ENS</p>
+        </header>
+
+        <div class="section-content">
+            <h2>1. Resumen Ejecutivo</h2>
+            <p> El presente informe documenta vulnerabilidades críticas en la arquitectura de la Sede Electrónica de la
+                <strong>Entidad Pública Local 3</strong>, alojada bajo el dominio <strong>sede.entidad-tres.es</strong>.
+                Las deficiencias identificadas comprometen directamente la privacidad de los usuarios y la integridad de
+                los trámites ciudadanos.</p>
+
+            <p> Durante la auditoría se ha identificado un fallo sistémico en la gestión de sesiones (<em>Session
+                    Leakage</em> y <em>Session Fixation</em>), donde el servidor web expone y acepta identificadores de
+                sesión válidos a través de la URI en texto plano (método GET), permitiendo el secuestro de sesiones
+                (<em>Session Hijacking</em>) mediante técnicas triviales de ingeniería social o interceptación de
+                tráfico no cifrado. </p>
+
+            <p> Adicionalmente, se demostró que el contenedor web es vulnerable a la manipulación lógica mediante
+                <strong>HTTP Parameter Pollution (HPP)</strong>. Esta vulnerabilidad permite a un atacante evadir las
+                reglas de enrutamiento del balanceador de carga, exponiendo la topología interna de la DMZ (Zona
+                Desmilitarizada) institucional.</p>
+
+        </div>
+
+        <h2>2. Matriz de Riesgos y Amenazas (Magerit v3)</h2>
+        <div class="section-content">
+            <table class="matrix">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Dimensión</th>
+                        <th>Amenaza Detectada</th>
+                        <th>Impacto</th>
+                        <th>Nivel de Riesgo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ENT3-SES-01</td>
+                        <td>[C] [I]</td>
+                        <td>Fuga de Sesión en URI (Session Leakage)</td>
+                        <td>Alto</td>
+                        <td class="high">ALTO (8.9)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT3-SES-02</td>
+                        <td>[C] [I]</td>
+                        <td>Fijación de Sesión (Session Fixation)</td>
+                        <td>Alto</td>
+                        <td class="high">ALTO (8.5)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT3-HPP-03</td>
+                        <td>[I] [D]</td>
+                        <td>Evasión Lógica por Contaminación de Parámetros (HPP)</td>
+                        <td>Alto</td>
+                        <td class="high">ALTO (7.8)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT3-DMZ-04</td>
+                        <td>[C]</td>
+                        <td>Exposición de Topología Interna (DMZ Leak)</td>
+                        <td>Medio</td>
+                        <td class="medium">MEDIO (6.2)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>Página 1 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 3</footer>
+    </div>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+
+        <div class="section-content">
+            <h2>3. Análisis de Vulnerabilidades Técnicas (PoC)</h2>
+
+            <h3>3.1. Fuga y Fijación de Sesión (Session Leakage / Fixation)</h3>
+            <p>La aplicación web (Sede Electrónica) gestiona el estado de los usuarios autenticados pasando el
+                identificador de sesión (<code>JSESSIONID</code>) directamente en la URL en lugar de utilizar cookies
+                seguras (con flags <em>HttpOnly</em> y <em>Secure</em>). Esto significa que cualquier enlace compartido
+                por un usuario, o interceptado a través de los logs de un proxy corporativo, otorgará acceso
+                administrativo completo a su perfil ciudadano al atacante.</p>
+            <div class="console">
+                [PETICIÓN LEGÍTIMA IDENTIFICADA]
+                GET /tramites/inicio.do;JSESSIONID=A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6 HTTP/1.1
+                Host: sede.entidad-tres.es
+
+                [PRUEBA DE CONCEPTO (PoC) - SESSION FIXATION]
+                Un atacante fuerza la creación de una sesión conocida y envía el enlace a la víctima:
+                https://sede.entidad-tres.es/tramites/login.do;JSESSIONID=ATTACKER_SESSION_123
+
+                [!] Impacto: Una vez la víctima se autentica en ese enlace, el atacante recarga la página con la misma
+                URI y obtiene acceso total a la cuenta de la víctima sin necesidad de conocer sus credenciales.</div>
+
+            <h3>3.2. Contaminación de Parámetros HTTP (HPP) y Evasión de DMZ</h3>
+            <p>Se ha comprobado que el componente de enrutamiento web (WAF/Reverse Proxy) procesa de forma diferente los
+                parámetros GET duplicados frente a la aplicación backend. Mediante la inyección de múltiples parámetros
+                con el mismo nombre (<em>HTTP Parameter Pollution</em>), es posible confundir la lógica de validación,
+                saltarse las restricciones de seguridad y forzar al backend a revelar información de su infraestructura
+                interna (IPs privadas y nombres de host).</p>
+            <div class="console">
+                $ curl -i -s -k -X 'GET' \
+                'https://sede.entidad-tres.es/api/consulta?tramite=123&tramite=admin_debug_mode'
+
+                HTTP/1.1 200 OK
+                Content-Type: application/json
+
+                {
+                "status": "error",
+                "debug_info": {
+                "backend_node": "srv-app-int-04",
+                "internal_ip": "192.168.100.45",
+                "db_connection": "jdbc:oracle:thin:@192.168.100.12:1521:PROD"
+                }
+                }
+
+                [!] Vulnerabilidad Confirmada: El WAF validó "tramite=123" (permitido), pero el backend procesó
+                "tramite=admin_debug_mode", exponiendo la topología de la DMZ y las cadenas de conexión internas.</div>
+        </div>
+
+        <footer>Página 2 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 3</footer>
+    </div>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+
+        <div class="section-content">
+            <div class="danger-box">
+                <strong>NOTA DE IMPACTO NORMATIVO (ENS - NIVEL ALTO):</strong> La exposición de identificadores de
+                sesión en la URL en una plataforma ciudadana supone un incumplimiento flagrante de los controles de
+                Autenticación y Protección de las Comunicaciones del Esquema Nacional de Seguridad (ENS). Facilita el
+                robo de identidad y el acceso a datos sensibles (padrón, tributos, expedientes), vulnerando directamente
+                el RGPD.
+            </div>
+
+            <h2>4. Plan de Remediación Obligatorio</h2>
+            <p>Para mitigar las amenazas identificadas, se exige la implementación inmediata de las siguientes medidas
+                correctivas en la arquitectura de la Sede Electrónica:</p>
+            <ul>
+                <li><strong>Gestión Segura de Sesiones (Cookies):</strong> Deshabilitar el reescrito de URL (<em>URL
+                        Rewriting</em>) para la gestión de sesiones en el servidor de aplicaciones (Tomcat/JBoss).
+                    Forzar que los identificadores de sesión (<code>JSESSIONID</code>) se transmitan única y
+                    exclusivamente a través de cabeceras HTTP mediante el uso de Cookies.</li>
+
+                <li><strong>Aplicación de Flags de Seguridad:</strong> Configurar las cookies de sesión con los
+                    atributos <code>HttpOnly</code> (para mitigar ataques XSS) y <code>Secure</code> (para forzar su
+                    transmisión únicamente bajo túneles cifrados HTTPS).</li>
+
+                <li><strong>Regeneración de Sesión (Anti-Fixation):</strong> Modificar la lógica de autenticación de la
+                    aplicación para que, tras un inicio de sesión exitoso (Login), el servidor destruya el identificador
+                    de sesión actual y genere uno completamente nuevo y aleatorio.</li>
+
+                <li><strong>Mitigación de HPP (WAF & Backend):</strong> Estandarizar cómo la infraestructura procesa los
+                    parámetros duplicados. Configurar el WAF para que bloquee (Drop) o consolide las peticiones HTTP que
+                    contengan claves redundantes en la misma URI, evitando discrepancias lógicas con el servidor de
+                    aplicaciones final.</li>
+
+                <li><strong>Desactivación de Modos Debug:</strong> Auditar y desactivar cualquier endpoint o parámetro
+                    oculto que active respuestas de depuración (<em>Verbose Errors</em>) que expongan el
+                    direccionamiento IP interno de la DMZ (192.168.x.x) hacia internet.</li>
+            </ul>
+
+            <div class="legal-box">
+                <strong>AVISO LEGAL Y DESCARGO DE RESPONSABILIDAD (RESPONSIBLE DISCLOSURE)</strong><br><br>
+                Este informe ha sido generado con fines de auditoría ética y Divulgación Responsable (Responsible
+                Disclosure). Las pruebas se han realizado utilizando técnicas no intrusivas de reconocimiento y
+                validación siguiendo los estándares del ENS. No se ha alterado, extraído ni destruido información real
+                del servidor. La responsabilidad de la remediación y el parcheo recae exclusivamente en la entidad
+                titular del activo. Documento sanitizado y anonimizado para su publicación como caso de estudio técnico.
+            </div>
+        </div>
+
+        <footer>Página 3 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 3</footer>
+
+    </div>
+</body>
+
+</html>

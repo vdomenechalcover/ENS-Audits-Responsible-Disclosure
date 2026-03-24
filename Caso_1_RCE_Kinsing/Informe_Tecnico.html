@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>INFORME_TECNICO_AUDITORIA_ENTIDAD_1</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #d63031;
+            --info: #3498db;
+            --terminal-bg: #1e1e1e;
+            --terminal-text: #ffffff;
+            --bg: #f9f9f9;
+            --warning: #ff4757;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #525659;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 10mm auto;
+            background: white;
+            /* Aumentamos el padding inferior a 25mm para dejar hueco al footer absoluto */
+            padding: 15mm 20mm 25mm 20mm;
+            box-sizing: border-box;
+            position: relative;
+            /* Eliminamos display: flex para evitar bugs de salto de página al imprimir */
+            display: block;
+        }
+
+        /* Reglas de impresión para evitar cortes en medio de un texto o tabla */
+        .section-content p,
+        .matrix tr,
+        .console,
+        .danger-box,
+        h2,
+        h3,
+        li {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+                size: A4;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            .page {
+                margin: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                /* Forzamos proporciones exactas para evitar hojas en blanco extra */
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                overflow: hidden;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        .confidential-bar {
+            background: var(--accent) !important;
+            color: white !important;
+            text-align: center;
+            padding: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: -15mm -20mm 10mm -20mm;
+        }
+
+        .tlp-tag {
+            position: absolute;
+            top: 20mm;
+            right: 20mm;
+            background: #d63031 !important;
+            color: white !important;
+            padding: 8px 20px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        header {
+            border-bottom: 4px solid var(--info);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: 5mm;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--secondary);
+        }
+
+        .ip-badge {
+            background: var(--info) !important;
+            color: white !important;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 20px;
+            vertical-align: middle;
+        }
+
+        h2 {
+            color: var(--secondary);
+            border-left: 5px solid var(--info);
+            padding-left: 15px;
+            margin-top: 25px;
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+
+        .matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .matrix th {
+            background: var(--secondary) !important;
+            color: white !important;
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .matrix td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .critical {
+            background: #fab1a0 !important;
+            color: #c0392b !important;
+            font-weight: bold;
+        }
+
+        .high {
+            background: #ffeaa7 !important;
+            color: #d35400 !important;
+            font-weight: bold;
+        }
+
+        .console {
+            background: #1e1e1e !important;
+            color: #ffffff !important;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border-left: 5px solid #636e72;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+
+        .danger-box {
+            background: #fff5f5 !important;
+            border-left: 4px solid var(--accent);
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+        .legal-box {
+            font-size: 11px;
+            color: #636e72;
+            text-align: justify;
+            background: #f9f9f9 !important;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        /* Footer con posicionamiento absoluto para evitar saltos raros */
+        footer {
+            position: absolute;
+            bottom: 10mm;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 11px;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+        <div class="tlp-tag">TLP:RED</div>
+
+        <header>
+            <h1>INFORME TÉCNICO DE AUDITORÍA ENS</h1>
+            <p><strong>Auditor:</strong> Consultor de Seguridad (IFCT0109)</p>
+            <p><strong>Entidad:</strong> Entidad Pública Local 1 <span class="ip-badge">10.0.0.101</span> </p>
+            <p><strong>Metodología:</strong> Magerit v3 / ENS</p>
+        </header>
+
+        <div class="section-content">
+            <h2>1. Resumen Ejecutivo</h2>
+            <p> El presente INFORME TÉCNICO ENS documenta una brecha de seguridad crítica en la infraestructura de red
+                gestionada a través del activo <strong>10.0.0.101</strong>. El análisis ha identificado una
+                vulnerabilidad de Ejecución Remota de Código (<strong>RCE</strong>) en el framework Apache Struts2 que
+                permite a un atacante no autenticado ejecutar comandos en el servidor.
+            </p>
+
+            <p> Esta vulnerabilidad ha sido explotada por un actor de amenazas externo, lo que ha derivado en una
+                <strong>infección activa de malware</strong>. Se ha detectado la ejecución de un minero de criptomonedas
+                (identificado como Kinsing) que actualmente monopoliza los recursos computacionales del servidor,
+                operando bajo los privilegios del usuario de la aplicación web (<code>avendatomcat</code>).
+            </p>
+
+            <p> La infraestructura carece de un cortafuegos de aplicación web (WAF) y de mecanismos efectivos de
+                aislamiento (Sandboxing), otorgando al atacante acceso a herramientas nativas del sistema para
+                establecer persistencia y potencial movimiento lateral. El estado global del activo se clasifica como
+                <strong>Crítico y Comprometido</strong>.
+            </p>
+
+        </div>
+
+        <h2>2. Matriz de Riesgos y Amenazas (Magerit v3)</h2>
+        <div class="section-content">
+            <table class="matrix">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Dimensión</th>
+                        <th>Amenaza Detectada</th>
+                        <th>Impacto</th>
+                        <th>Nivel de Riesgo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ENT1-RCE-01</td>
+                        <td>[C] [I] [A]</td>
+                        <td>Ejecución Remota de Código (Struts2 S2-045)</td>
+                        <td>Extremo</td>
+                        <td class="critical">CRÍTICO (10.0)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT1-MAL-02</td>
+                        <td>[I] [A]</td>
+                        <td>Infección Activa de Malware (Minería Criptomonedas)</td>
+                        <td>Extremo</td>
+                        <td class="critical">CRÍTICO (9.8)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT1-ISO-03</td>
+                        <td>[I] [A]</td>
+                        <td>Falta de Sandboxing (nmap, nc, curl disponibles)</td>
+                        <td>Alto</td>
+                        <td class="high">ALTO (8.5)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT1-WAF-04</td>
+                        <td>[C] [I]</td>
+                        <td>Ausencia de Control Perimetral Activo (WAF)</td>
+                        <td>Alto</td>
+                        <td class="high">ALTO (8.2)</td>
+                    </tr>
+                    <tr>
+                        <td>ENT1-MON-05</td>
+                        <td>[T]</td>
+                        <td>Falla en la Trazabilidad y Alerta de Intrusión</td>
+                        <td>Medio</td>
+                        <td class="high">ALTO (7.2)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>Página 1 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 1</footer>
+    </div>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+
+        <div class="section-content">
+            <h2>3. Análisis de Vulnerabilidades Técnicas (PoC)</h2>
+
+            <h3>3.1. Ejecución Remota de Código (RCE)</h3>
+            <p>Se ha confirmado la presencia de la vulnerabilidad CVE-2017-5638 en el endpoint
+                <code>/tips/welcome.action</code>. El servidor procesa inyecciones OGNL arbitrarias enviadas a través de
+                la cabecera HTTP <code>Content-Type</code>. El servicio opera bajo el usuario <code>avendatomcat</code>,
+                permitiendo la ejecución de comandos con dichos privilegios.
+            </p>
+            <div class="console">
+                $ curl -k -v -L -H "Content-Type: %{(#ident='multipart/form-data')...(#cmd='id')...}"
+                https://10.0.0.101/
+
+                HTTP/1.1 200 OK
+                uid=10100(avendatomcat) gid=100(users) groups=100(users),10000(appusers),21001(superadmin)
+
+                [!] Confirmado: Explotación exitosa. Acceso al sistema como usuario avendatomcat.</div>
+
+            <h3>3.2. Infección Activa por Malware (Criptominería)</h3>
+            <p>El análisis de procesos del sistema revela una explotación crítica de los recursos. Se ha identificado la
+                ejecución concurrente de un minero de criptomonedas (Kinsing), cuyo binario principal <code>solrd</code>
+                está consumiendo más del 100% de la capacidad de la CPU. Este binario está respaldado por scripts de
+                persistencia en directorios temporales ocultos.</p>
+            <div class="console">
+                $ curl -s -k -L -H "Content-Type: %{(#_...(#cmd='ps aux')...}" https://10.0.0.101/
+
+                USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+                10100 6206 111 6.9 311016 270488 ? Sl 2026 235402:02 /tmp/.solr/solrd
+                10100 32608 1.0 0.0 115204 1224 ? S 2026 2293:54 /bin/sh /tmp/.solr/solr.sh
+
+                [!] Alerta Crítica: Infraestructura controlada por una botnet de minería activa.</div>
+        </div>
+
+        <footer>Página 2 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 1</footer>
+    </div>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+
+        <div class="section-content">
+            <h3>3.3. Herramientas de Ataque y Movimiento Lateral</h3>
+            <p>La cuenta de servicio web (<code>avendatomcat</code>) no se encuentra contenida mediante mecanismos de
+                aislamiento (Sandboxing). Dispone de permisos de lectura y ejecución sobre binarios nativos críticos, lo
+                cual facilita enormemente la descarga de cargas útiles adicionales y el mapeo de la red interna por
+                parte de un atacante.</p>
+            <div class="console">
+                $ curl -s -k -L -H "Content-Type: %{(#_...(#cmd='which nmap nc curl wget')...}" https://10.0.0.101/
+
+                /usr/bin/nmap
+                /usr/bin/nc
+                /usr/bin/curl
+                /usr/bin/wget
+
+                [!] Riesgo: Vector de propagación interna a disposición del atacante.</div>
+
+            <h3>3.4. Ausencia de Controles Perimetrales (WAF) y Trazabilidad</h3>
+            <p>Se ha evaluado la respuesta del servidor frente a simulaciones de ataques automatizados de fuerza bruta y
+                escaneo. La infraestructura no cuenta con un cortafuegos de aplicación (WAF) ni mecanismos de mitigación
+                activa (ej. Fail2Ban), procesando ráfagas continuas de peticiones maliciosas sin alertar ni denegar el
+                servicio a la IP de origen.</p>
+            <div class="console">
+                $ for i in {1..50}; do curl -k -s -L -o /dev/null -w "%{http_code} " https://10.0.0.101/.env; done
+
+                200 200 200 200 200 200 200 200 200 200 200 200 200...
+
+                [!] Estado: El servidor es ciego ante ataques de fuerza bruta. No hay bloqueo de IP.</div>
+
+            <div class="danger-box">
+                <strong>NOTA DE SEGURIDAD (Control de Accesos):</strong> Las pruebas de lectura sobre el archivo de
+                credenciales <code>/etc/shadow</code> y las configuraciones de segmentación en
+                <code>/etc/config/aruba/</code> devolvieron errores de <em>"Permission denied"</em> y <em>"No such
+                    file"</em>. Esto se debe a que el servicio no opera con privilegios administrativos (root), lo que
+                previene temporalmente la exfiltración directa de contraseñas de sistema, aunque no impide el compromiso
+                de la aplicación web.
+            </div>
+
+        </div>
+
+        <footer>Página 3 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 1</footer>
+    </div>
+
+    <div class="page">
+        <div class="confidential-bar">INFORMACIÓN CONFIDENCIAL - TLP:RED - USO RESTRINGIDO</div>
+
+        <div class="section-content">
+            <h2>4. Plan de Remediación Obligatorio</h2>
+            <p>La criticidad de los hallazgos, combinada con la presencia de un incidente de malware activo, requiere la
+                ejecución inmediata de las siguientes medidas de contención y erradicación:</p>
+            <ul>
+                <li><strong>Erradicación de la Infección (Nuke & Pave):</strong> Dada la infección por Kinsing y su
+                    capacidad para crear mecanismos de persistencia ocultos, se considera que el entorno de ejecución
+                    está totalmente comprometido. Se requiere el formateo completo del servidor y la reinstalación del
+                    sistema operativo desde una imagen oficial, en lugar de intentar eliminar manualmente los binarios
+                    detectados en <code>/tmp</code>.</li>
+
+                <li><strong>Parcheo de Vulnerabilidad (Prioridad Crítica):</strong> Es imperativo actualizar la
+                    biblioteca Apache Struts2 a una versión no vulnerable (ej. superior a 2.3.32 o 2.5.10.1) que corrija
+                    el fallo CVE-2017-5638 antes de volver a exponer el servicio a cualquier red de producción.</li>
+
+                <li><strong>Despliegue de Seguridad Perimetral (WAF):</strong> Implementar de inmediato un Firewall de
+                    Aplicaciones Web capaz de inspeccionar, alertar y bloquear inyecciones de código malicioso (como
+                    expresiones OGNL) y escaneos anómalos.</li>
+
+                <li><strong>Renovación de Certificados Criptográficos:</strong> Proceder a la renovación del certificado
+                    SSL de <code>wifi.entidad-local.es</code> para garantizar la integridad
+                    de las comunicaciones y el cumplimiento de la normativa vigente.</li>
+
+                <li><strong>Revisión de Privilegios Locales:</strong> Aunque el servicio no se ejecuta como root, se
+                    deben restringir los permisos del usuario <code>avendatomcat</code> para evitar que pueda ejecutar
+                    herramientas de red y descarga de binarios (nmap, nc, wget, curl) mediante perfiles de AppArmor o
+                    SELinux.</li>
+            </ul>
+
+            <div class="legal-box">
+                <strong>AVISO LEGAL Y DESCARGO DE RESPONSABILIDAD (RESPONSIBLE DISCLOSURE)</strong><br><br>
+                Este informe ha sido generado con fines de auditoría ética y Divulgación Responsable (Responsible
+                Disclosure). Las pruebas se han realizado utilizando técnicas no intrusivas
+                de reconocimiento y validación siguiendo los estándares del ENS. No se ha alterado, extraído ni
+                destruido información real del servidor. La responsabilidad de la remediación y el parcheo recae
+                exclusivamente en la entidad titular del activo. Documento sanitizado y anonimizado para su publicación
+                como caso de estudio técnico.
+            </div>
+        </div>
+
+        <footer>Página 4 de 4 | INFORME TÉCNICO ENS ENTIDAD LOCAL 1</footer>
+
+    </div>
+</body>
+
+</html>
